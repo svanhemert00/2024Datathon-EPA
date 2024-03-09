@@ -6,6 +6,7 @@ This predictor tool is designed for women-owned businesses looking to understand
 ## Files:
 - [epa_app.py](https://github.com/svanhemert00/2024Datathon-EPA/blob/main/epa_app.py): Script that generates model and produces front-end. Future improvenents would involve decoupling back-end from front-end
 - [requirements.txt](https://github.com/svanhemert00/2024Datathon-EPA/blob/main/requirements.txt): List of library dependencies required to deploy Streamlit front-end
+- [config.toml](https://github.com/svanhemert00/2024Datathon-EPA/blob/main/config.toml): Sets up design for StreamLit web app.
 - Data Files:
   - [FY2022_068_Contracts_Full_20240214_1.csv](https://github.com/svanhemert00/2024Datathon-EPA/blob/main/FY2022_068_Contracts_Full_20240214_1.csv)
   - [FY2023_068_Contracts_Full_20240214_1.csv](https://github.com/svanhemert00/2024Datathon-EPA/blob/main/FY2023_068_Contracts_Full_20240214_1.csv)
