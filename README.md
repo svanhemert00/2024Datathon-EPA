@@ -11,3 +11,4 @@ This predictor tool is designed for women-owned businesses looking to understand
   - [FY2022_068_Contracts_Full_20240214_1.csv](https://github.com/svanhemert00/2024Datathon-EPA/blob/main/FY2022_068_Contracts_Full_20240214_1.csv)
   - [FY2023_068_Contracts_Full_20240214_1.csv](https://github.com/svanhemert00/2024Datathon-EPA/blob/main/FY2023_068_Contracts_Full_20240214_1.csv)
   - [FY2024_068_Contracts_Full_20240214_1.csv](https://github.com/svanhemert00/2024Datathon-EPA/blob/main/FY2024_068_Contracts_Full_20240214_1.csv)
+- [Model Building.ipynb](https://github.com/svanhemert00/2024Datathon-EPA/blob/main/Model%20Building.ipynb): Jupyter Notebook for initial model exploration and building.
