@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import StandardScaler
-from imblearn.over_sampling import SMOTE
+#from imblearn.over_sampling import SMOTE
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 
@@ -187,12 +187,13 @@ y = df_filtered_class['potential_total_value_of_award']
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 # apply SMOTE to handle class imbalances
-smote = SMOTE(random_state=42)
-X_train_resampled, y_train_resampled = smote.fit_resample(X_train, y_train)
+#smote = SMOTE(random_state=42)
+#X_train_resampled, y_train_resampled = smote.fit_resample(X_train, y_train)
 
 # Random Forest Classifier
 rf_classifier = RandomForestClassifier(random_state=42)
-rf_classifier.fit(X_train_resampled, y_train_resampled)
+#rf_classifier.fit(X_train_resampled, y_train_resampled)
+rf_classifier.fit(X_train, y_train)
 
 # make predictions on the test data
 y_pred = rf_classifier.predict(X_test)
