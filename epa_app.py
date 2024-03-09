@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import StandardScaler
-#from imblearn.over_sampling import SMOTE
+from imblearn.over_sampling import SMOTE
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 
@@ -12,8 +12,9 @@ from sklearn.ensemble import RandomForestClassifier
 st.set_page_config(layout="wide")
 
 # title
+st.markdown("<h1 style='text-align: center;'>🍃</h1>", unsafe_allow_html=True)
 st.markdown("<h1 style='text-align: center;'>U.S. ENVIRONMENTAL PROTECTION AGENCY (EPA)</h1>", unsafe_allow_html=True)
-st.markdown("<p style='text-align: center;'>Welcome!</p>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center;'>This predictor tool is designed for women-owned businesses looking to understand expected funding of an EPA sustainability grant</p>", unsafe_allow_html=True)
 
 # ingest data
 @st.cache_resource
@@ -174,6 +175,10 @@ df_filtered[fields_to_scale] = scaler.fit_transform(df_filtered[fields_to_scale]
 df_filtered_class = df_filtered.copy()
 df_filtered_class['potential_total_value_of_award'] = pd.qcut(df_filtered['potential_total_value_of_award'], q=3, labels=[1, 2, 3])
 
+# identifying tertiles
+t1 = np.percentile(df_filtered['potential_total_value_of_award'], 33.33)
+t2 = np.percentile(df_filtered['potential_total_value_of_award'], 66.66)
+
 # partition user input from training data
 user_input = df_filtered_class[df_filtered_class['training_or_user_input'] == 'user_input'][['region_code', 'veteran_owned', 'small_business', 'ethnicity']]
 df_filtered_class = df_filtered_class[df_filtered_class['training_or_user_input'] != 'user_input']
@@ -187,13 +192,12 @@ y = df_filtered_class['potential_total_value_of_award']
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 # apply SMOTE to handle class imbalances
-#smote = SMOTE(random_state=42)
-#X_train_resampled, y_train_resampled = smote.fit_resample(X_train, y_train)
+smote = SMOTE(random_state=42)
+X_train_resampled, y_train_resampled = smote.fit_resample(X_train, y_train)
 
 # Random Forest Classifier
 rf_classifier = RandomForestClassifier(random_state=42)
-#rf_classifier.fit(X_train_resampled, y_train_resampled)
-rf_classifier.fit(X_train, y_train)
+rf_classifier.fit(X_train_resampled, y_train_resampled)
 
 # make predictions on the test data
 y_pred = rf_classifier.predict(X_test)
@@ -202,28 +206,35 @@ y_pred = rf_classifier.predict(X_test)
 #accuracy = accuracy_score(y_test, y_pred)
 #print("Accuracy:", accuracy)
 
+# type cast tertiles
+t1 = str(int(t1))
+t2 = str(int(t2))
+
 # predict user input
 user_pred = rf_classifier.predict(user_input)
 if user_pred == 1:
-    grant_range = 'SMALL-SIZED GRANT ($X-$X)'
+    grant_range = '😔 SMALL-SIZED GRANT (\$0-\$' + t1 + ') 🤏'
 elif user_pred == 2:
-    grant_range = 'MEDIUM-SIZED GRANT ($X-$X)'
+    grant_range = 'MEDIUM-SIZED GRANT (\$' + t1 + '-\$' + t2 + ')'
 else:
-    grant_range = 'LARGE-SIZED GRANT ($X-$X)'
+    grant_range = 'LARGE-SIZED GRANT (\$'+ t2 + '+)'
           
 # run button
-run_button = st.button("RUN")       
+run_button = st.button("🏃 RUN")       
 if run_button:
     st.success(grant_range)
     
 # display data button
 #display = st.button("DISPLAY DATA")       
 #if run_button:
-#    st.write(df_display)
+#    st.write(df_combined)
 
 # image logo
 #st.image('./EPA_logo.png')
 
 # links
-st.link_button('EPA.GOV', "https://www.epa.gov/")
-st.link_button('GITHUB REPO', "https://github.com/svanhemert00")
+st.link_button('🌐 EPA.GOV', "https://www.epa.gov/")
+st.link_button('🐱 GITHUB REPO', "https://github.com/svanhemert00/2024Datathon-EPA")
+display_data = st.checkbox("💾 SHOW DATA")     
+if display_data:
+    st.write(df_combined)
