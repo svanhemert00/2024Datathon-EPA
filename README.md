@@ -1,1 +1,1 @@
-LMU Datathon - Spring 2024
+# LMU Datathon - Spring 2024
