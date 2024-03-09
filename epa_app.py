@@ -9,7 +9,10 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 
 # streamlit configurations
-st.set_page_config(layout="wide")
+st.set_page_config(
+  layout="wide",
+  page_icon="🍃"
+)
 
 # title
 st.markdown("<h1 style='text-align: center;'>🍃</h1>", unsafe_allow_html=True)
